@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+  auth-service:
+    image: asia-southeast2-docker.pkg.dev/high-acre-464805-p2/mercari-repo/auth-service:latest
+    ports:
+      - "4000:4000"
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${AUTH_DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_DIALECT=postgres
+      - JWT_SECRET=${JWT_SECRET}
+    restart: unless-stopped
+
+  cart-service:
+    image: asia-southeast2-docker.pkg.dev/high-acre-464805-p2/mercari-repo/cart:latest
+    ports:
+      - "4001:4001"
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${CART_DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_DIALECT=postgres
+      - JWT_SECRET=${JWT_SECRET}
+    restart: unless-stopped
+
+  product-service:
+    image: asia-southeast2-docker.pkg.dev/high-acre-464805-p2/mercari-repo/product:latest
+    ports:
+      - "4002:4002"
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${PRODUCT_DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_DIALECT=postgres
+    restart: unless-stopped
+
+  gateway-service:
+    image: asia-southeast2-docker.pkg.dev/high-acre-464805-p2/mercari-repo/gateway-service:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
