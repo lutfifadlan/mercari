@@ -64,6 +64,16 @@ jobs:
         username: ${{ secrets.VM_USER }}
         key: ${{ secrets.VM_SSH_KEY }}
         script: |
-          cd ~/mercari           # ganti jika path repo di VM berbeda
-          docker-compose pull
-          docker-compose up -d --remove-orphans
+          # Clone or update repository
+          if [ ! -d ~/mercari ]; then
+            git clone https://github.com/${{ github.repository }} ~/mercari
+          else
+            cd ~/mercari && git pull
+          fi
+          
+          # Copy docker-compose.yml from repository
+          cd ~/mercari
+          
+          # Pull and run containers
+          docker compose pull
+          docker compose up -d --remove-orphans
