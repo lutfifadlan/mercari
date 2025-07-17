@@ -81,6 +81,26 @@ jobs:
             sudo chmod +x /usr/local/bin/docker-compose
           fi
           
+          # Configure Docker to use GCR (if gcloud is available on VM)
+          if command -v gcloud &> /dev/null; then
+            gcloud auth configure-docker
+          fi
+          
+          # Create .env file with database credentials if it doesn't exist
+          if [ ! -f .env ]; then
+            cat > .env << EOF
+          DB_USER=postgres
+          DB_PASS=GzUXBMEe8dFRBY69GYXNg2VWEYaGiTxcBkVB
+          AUTH_DB_NAME=authdb
+          CART_DB_NAME=cartdb
+          PRODUCT_DB_NAME=productdb
+          DB_HOST=34.123.120.244
+          DB_PORT=5432
+          DB_DIALECT=postgres
+          JWT_SECRET=mysecretkey
+          EOF
+          fi
+          
           # Pull and run containers
           docker-compose pull
           docker-compose up -d --remove-orphans
