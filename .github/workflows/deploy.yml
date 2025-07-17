@@ -71,9 +71,16 @@ jobs:
             cd ~/mercari && git pull
           fi
           
-          # Copy docker-compose.yml from repository
+          # Navigate to repository
           cd ~/mercari
           
+          # Check if docker-compose is installed, if not install it
+          if ! command -v docker-compose &> /dev/null; then
+            echo "Installing docker-compose..."
+            sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+          fi
+          
           # Pull and run containers
-          docker compose pull
-          docker compose up -d --remove-orphans
+          docker-compose pull
+          docker-compose up -d --remove-orphans
