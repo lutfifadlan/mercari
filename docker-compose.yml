@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   auth-service:
-    image: asia-southeast2-docker.pkg.dev/high-acre-464805-p2/mercari-repo/auth-service:latest
+    image: gcr.io/solodevkit/auth-service:latest
     ports:
       - "4000:4000"
     environment:
@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
 
   cart-service:
-    image: asia-southeast2-docker.pkg.dev/high-acre-464805-p2/mercari-repo/cart:latest
+    image: gcr.io/solodevkit/cart:latest
     ports:
       - "4001:4001"
     environment:
@@ -29,7 +29,7 @@ services:
     restart: unless-stopped
 
   product-service:
-    image: asia-southeast2-docker.pkg.dev/high-acre-464805-p2/mercari-repo/product:latest
+    image: gcr.io/solodevkit/product:latest
     ports:
       - "4002:4002"
     environment:
@@ -42,7 +42,7 @@ services:
     restart: unless-stopped
 
   gateway-service:
-    image: asia-southeast2-docker.pkg.dev/high-acre-464805-p2/mercari-repo/gateway-service:latest
+    image: gcr.io/solodevkit/gateway-service:latest
     ports:
       - "3000:3000"
     environment:
